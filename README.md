@@ -1,2 +1,2 @@
 # Commerce_DbTableProductType
-A simple Commerce module to use an extended package.
+A simple Modmore Commerce module to use an extended package. https://www.modmore.com/commerce/
