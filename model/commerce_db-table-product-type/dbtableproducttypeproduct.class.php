@@ -82,21 +82,13 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $value = $this->get('price');
         if ($target = $this->getTarget()) {
-            $retail = $target->get('Regular_Retail');
-            $sale = $target->get('Regular_Sale');
+            $value = $target->get($this->commerce->getOption('commerce_db-table-product-type.price_col'))
 
-            if($retail > 0) {
-                if($sale > 0) {
-                    $value = $sale;
-                } else {
-                    $value = $retail;
-                }
+            if ($this->adapter->getOption('commerce.resourceproduct.price_field_decimals', null, true)) {
+                $units = $this->commerce->currency->get('subunits');
+                $value = (float)str_replace(',', '.', $value);
+                $value = (int)round($value * pow(10, $units));
             }
-
-            // Convert decimal dollar to integer
-            $units = $this->commerce->currency->get('subunits');
-            $value = (float)str_replace(',', '.', $value);
-            $value = (int)round($value * pow(10, $units));
 
             $this->set('price', $value);
             if (!$this->_deferSave) {
