@@ -28,7 +28,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $sku = $this->get('sku');
         if ($target = $this->getTarget()) {
-            $sku = $target->get($this->commerce->getOption('commerce_db-table-product-type.sku_col'));
+            $sku = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.sku_col'));
             $this->set('sku', $sku);
             if (!$this->_deferSave) {
                 $this->save();
@@ -46,7 +46,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $name = $this->get('name');
         if ($target = $this->getTarget()) {
-            $name = $target->get($this->commerce->getOption('commerce_db-table-product-type.name_col'));
+            $name = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.name_col'));
             $this->set('name', $name);
             if (!$this->_deferSave) {
                 $this->save();
@@ -64,7 +64,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $description = $this->get('description');
         if ($target = $this->getTarget()) {
-            $description = $target->get($this->commerce->getOption('commerce_db-table-product-type.description_col'));
+            $description = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.description_col'));
             $this->set('description', $description);
             if (!$this->_deferSave) {
                 $this->save();
@@ -82,7 +82,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $value = $this->get('price');
         if ($target = $this->getTarget()) {
-            $value = $target->get($this->commerce->getOption('commerce_db-table-product-type.price_col'))
+            $value = $target->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.price_col'));
 
             if ($this->adapter->getOption('commerce.resourceproduct.price_field_decimals', null, true)) {
                 $units = $this->commerce->currency->get('subunits');
@@ -110,7 +110,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $stock = $this->get('stock');
         if ($target = $this->getTarget()) {
-            $stock = $target->get($this->commerce->getOption('commerce_db-table-product-type.stock_col'));
+            $stock = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.stock_col'));
             $this->set('stock', $stock);
             if (!$this->_deferSave) {
                 $this->save();
@@ -129,7 +129,7 @@ class DbTableProductTypeProduct extends comProduct {
     {
         if ($target = $this->getTarget()) {
             // Get the weight
-            $value = $target->get($this->commerce->getOption('commerce_db-table-product-type.weight_col'));
+            $value = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.weight_col'));
             $this->set('weight', $value);
 
             // Set statically to always use pounds.
@@ -164,7 +164,7 @@ class DbTableProductTypeProduct extends comProduct {
             return $this->taxGroup;
         }
         if ($target = $this->getTarget()) {
-            $id = $target->get($this->commerce->getOption('commerce_db-table-product-type.taxgroup_col'));
+            $id = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.taxgroup_col'));
 
             if ($id < 1) {
                 $id = (int)$this->adapter->getOption('commerce.default_tax_group');
@@ -189,7 +189,7 @@ class DbTableProductTypeProduct extends comProduct {
         }
 
         if ($target = $this->getTarget()) {
-            $id = $target->get($this->commerce->getOption('commerce_db-table-product-type.deliverytype_col'));
+            $id = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.deliverytype_col'));
             $this->set('delivery_type', $id);
             if (!$this->_deferSave) {
                 $this->save();
@@ -238,7 +238,7 @@ class DbTableProductTypeProduct extends comProduct {
      */
     public function getTargetField($target, $field)
     {
-        $target->get($field);
+        return $target->get($field);
     }
 
     /**
@@ -264,7 +264,7 @@ class DbTableProductTypeProduct extends comProduct {
     public function getLink()
     {
         if ($target = $this->getTarget()) {
-            return $this->adapter->makeResourceUrl($target->get('resource_id'), '', array(), 'full');
+            return $this->adapter->makeResourceUrl($this->getTargetField($target, 'resource_id'), '', array(), 'full');
         }
         return false;
     }
