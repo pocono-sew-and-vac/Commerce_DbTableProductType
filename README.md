@@ -3,5 +3,19 @@ A simple Modmore Commerce module to use an extended package. Easy to use with MI
 
 ## Setup
 
-1. Install the package to your MODX installation with Commerce (more details here https://github.com/modmore/Commerce_ModuleSkeleton)
-2. Configure the system settings, commerce_db-table-product-type, for your table. classpkg_name must be an extended package.
+1. Install the package to your MODX installation with Commerce by installing the transport package here (drop into /core/packages, search local packages) https://github.com/tonyklapatch/Commerce_DbTableProductType/releases/
+2. Configure the module's system settings, located under the commerce_db-table-product-type namespace, for your table. All the options are described below.
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| classpkg_name | Name of the extended package you want to use to get data from. |
+| commerce_db-table-product-type.deliverytype_col | Delivery type column to read, uses Commerce ID of the delivery type |
+| commerce_db-table-product-type.description_col | Description column to read |
+| commerce_db-table-product-type.name_col | Name column to read |
+| commerce_db-table-product-type.price_col | Price column to read (this uses the option commerce.resourceproduct.price_field_decimals as well) |
+| commerce_db-table-product-type.sku_col | SKU column to read |
+| commerce_db-table-product-type.stock_col | Stock column to read |
+| commerce_db-table-product-type.taxgroup_col | Taxgroup column to read, uses Commerce ID of the tax group |
+| commerce_db-table-product-type.weight_col | Weight column to read |
