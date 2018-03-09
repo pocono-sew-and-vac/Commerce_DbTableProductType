@@ -10,7 +10,7 @@ A simple Modmore Commerce module to use an extended package. Easy to use with MI
 
 | Option | Description |
 | --- | --- |
-| classpkg_name | Name of the extended package you want to use to get data from. |
+| commerce_db-table-product-type.classpkg_name | Name of the extended package you want to use to get data from. |
 | commerce_db-table-product-type.deliverytype_col | Delivery type column to read, uses Commerce ID of the delivery type |
 | commerce_db-table-product-type.description_col | Description column to read |
 | commerce_db-table-product-type.name_col | Name column to read |
