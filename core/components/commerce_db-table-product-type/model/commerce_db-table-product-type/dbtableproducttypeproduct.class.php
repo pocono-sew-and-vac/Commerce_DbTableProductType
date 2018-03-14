@@ -82,20 +82,17 @@ class DbTableProductTypeProduct extends comProduct {
     {
         $value = $this->get('price');
         if ($target = $this->getTarget()) {
-            $value = $target->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.price_col'));
-
+            $value = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.price_col'));
             if ($this->adapter->getOption('commerce.resourceproduct.price_field_decimals', null, true)) {
                 $units = $this->commerce->currency->get('subunits');
                 $value = (float)str_replace(',', '.', $value);
                 $value = (int)round($value * pow(10, $units));
             }
-
             $this->set('price', $value);
             if (!$this->_deferSave) {
                 $this->save();
             }
         }
-
         $price = new \modmore\Commerce\Products\Price($this->commerce);
         $price->set($value, $this->commerce->currency);
         return $price;
@@ -121,7 +118,7 @@ class DbTableProductTypeProduct extends comProduct {
 
 
     /**
-     * Returns the current stock level
+     * Returns the current weight level
      *
      * @return Mass|null
      */
@@ -132,11 +129,14 @@ class DbTableProductTypeProduct extends comProduct {
             $value = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.weight_col'));
             $this->set('weight', $value);
 
-            // Set statically to always use pounds.
-            $unit = "lb";
+            if (!empty($this->commerce->getOption('commerce_db-table-product-type.weight_unit_col'))) {
+                $unit = $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.weight_unit_col'));
+            }
+
             if (empty($unit)) {
                 $unit = $this->adapter->getOption('commerce.default_weight_unit', null, 'kg', true);
             }
+
             $this->set('weight_unit', $unit);
             if (!$this->_deferSave) {
                 $this->save();
@@ -232,7 +232,7 @@ class DbTableProductTypeProduct extends comProduct {
     }
 
     /**
-     * @param modResource $target
+     * @param extendedpkg $target
      * @param string $field
      * @return mixed
      */
@@ -242,7 +242,7 @@ class DbTableProductTypeProduct extends comProduct {
     }
 
     /**
-     * @param modResource $target
+     * @param extendedpkg $target
      * @param string $field
      * @param mixed $value
      * @return mixed
@@ -253,18 +253,17 @@ class DbTableProductTypeProduct extends comProduct {
     }
 
     /**
-     * Returns the link for viewing the product in the frontend. As a standard
-     * comProduct instance doesn't automatically have a frontend display, we return
-     * false here.
-     *
-     * Derivatives can implement their own logic here to grab the right url.
-     *
+     * Returns the link for viewing the product in the frontend. This
+     * will only return if the resource id column is set in system settings.
+     *   
      * @return bool|string
      */
     public function getLink()
     {
         if ($target = $this->getTarget()) {
-            return $this->adapter->makeResourceUrl($this->getTargetField($target, 'resource_id'), '', array(), 'full');
+            if (!empty($this->commerce->getOption('commerce_db-table-product-type.resource_col'))) {
+                return $this->adapter->makeResourceUrl($this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.resource_col')), '', array(), 'full');
+            }   
         }
         return false;
     }
@@ -282,21 +281,22 @@ class DbTableProductTypeProduct extends comProduct {
 
     /**
      * Returns the link for editing the product information in the catalog, wherever that may be.
+     * This is set if you have the resource id column set in system settings.
      *
      * @return bool|string
      */
     public function getEditCatalogLink()
     {
         if ($target = $this->getTarget()) {
-            $url = $this->adapter->getOption('manager_url');
-            $url .= '?a=resource/update';
-            $url .= '&id=' . $target->get('resource_id');
-            return $url;
+            if (!empty($this->commerce->getOption('commerce_db-table-product-type.resource_col'))) {
+                $url = $this->adapter->getOption('manager_url');
+                $url .= '?a=resource/update';
+                $url .= '&id=' . $this->getTargetField($target, $this->commerce->getOption('commerce_db-table-product-type.resource_col'));
+                return $url;
+            }
         }
         return false;
     }
-
-
 
     public function synchronise()
     {

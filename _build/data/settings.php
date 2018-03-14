@@ -29,11 +29,19 @@ return [
         'area' => 'general',
         'value' => '',
     ],
+    'weight_unit_col' => [
+        'area' => 'general',
+        'value' => '',
+    ],
     'taxgroup_col' => [
         'area' => 'general',
         'value' => '',
     ],
     'deliverytype_col' => [
+        'area' => 'general',
+        'value' => '',
+    ],
+    'resource_col' => [
         'area' => 'general',
         'value' => '',
     ]
