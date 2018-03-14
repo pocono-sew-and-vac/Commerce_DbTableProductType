@@ -23,7 +23,7 @@ if (!defined('MOREPROVIDER_BUILD')) {
     /* define version */
     define('PKG_NAME', 'Commerce_ProjectName');
     define('PKG_NAMESPACE', 'commerce_db-table-product-type');
-    define('PKG_VERSION', '1.0.0');
+    define('PKG_VERSION', '1.1.0');
     define('PKG_RELEASE', 'rc1');
 
     /* load modx */

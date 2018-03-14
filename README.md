@@ -19,3 +19,5 @@ A simple Modmore Commerce module to use an extended package. Easy to use with MI
 | commerce_db-table-product-type.stock_col | Stock column to read |
 | commerce_db-table-product-type.taxgroup_col | Taxgroup column to read, uses Commerce ID of the tax group |
 | commerce_db-table-product-type.weight_col | Weight column to read |
+| commerce_db-table-product-type.weight_unit_col | Unit of weight for the product to read. Defaults to system default if not set. |
+| commerce_db-table-product-type.resource_col | If attaching products to resources, this is the column that points to the resource to read from. Leave blank if not. |
