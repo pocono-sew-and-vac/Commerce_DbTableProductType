@@ -3,7 +3,7 @@ A simple Modmore Commerce module to use an extended package. Easy to use with MI
 
 ## Setup
 
-1. Install the package to your MODX installation with Commerce by installing the transport package here (drop into /core/packages, search local packages) https://github.com/tonyklapatch/Commerce_DbTableProductType/releases/
+1. Install the package to your MODX installation with Commerce by installing the transport package here (upload package in installer) https://github.com/tonyklapatch/Commerce_DbTableProductType/releases/
 2. Configure the module's system settings, located under the commerce_db-table-product-type namespace, for your table. All the options are described below.
 
 ## Options
