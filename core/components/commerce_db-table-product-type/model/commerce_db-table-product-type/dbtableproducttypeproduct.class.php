@@ -212,7 +212,7 @@ class DbTableProductTypeProduct extends comProduct {
 
         if ($target = $this->getTarget()) {
             $target->set($this->commerce->getOption('commerce_db-table-product-type.stock_col'), $stock);
-            $this->save();
+            $target->save();
         }
 
         return $stock;
